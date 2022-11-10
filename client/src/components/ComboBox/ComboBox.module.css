@@ -1,0 +1,17 @@
+.comboBox {
+    width: 157px;
+    height: 33px;
+    background-color: #FF5722;
+    color: #BDBDBD;
+    border-radius: 5px;
+    border: none;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.listItem {
+    color: #212121;
+    text-align: center;
+    font-family: 'Roboto';
+    font-weight: bold;
+}

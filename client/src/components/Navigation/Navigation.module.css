@@ -1,0 +1,44 @@
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #FF5722;
+    width: auto;
+    height: 47px;
+}
+
+.navItems {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-around;
+    list-style: none;
+    margin-right: 10px;
+}
+
+.navBrand {
+    margin-right: auto;
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #212121;
+    border-radius: 50%;
+}
+
+.navItem {
+    margin-right: 5px;
+    margin-left: 10px;
+}
+
+.navLink {
+    text-decoration: none;
+    color: #212121;
+}
+
+.brandLogo {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}

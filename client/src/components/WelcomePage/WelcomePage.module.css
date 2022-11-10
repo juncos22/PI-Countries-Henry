@@ -1,0 +1,32 @@
+.welcomeContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 100px;
+}
+
+.welcomeTitle {
+    font-size: 60px;
+    color: #E64A19;
+    text-align: center;
+}
+
+.welcomeButton {
+    border-radius: 20px;
+    background-color: #E64A19;
+    color: #212121;
+    border: none;
+    width: 169px;
+    height: 39px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.welcomeButton:hover {
+    background-color: #536DFE;
+    color: #FFFFFF;
+}

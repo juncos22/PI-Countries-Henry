@@ -32,7 +32,45 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+body {
+  background-image: url("./assets/img/background.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-color: rgba(33, 33, 33, 0.8);
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url(./assets/fonts/roboto.ttf);
+}
+
+* {
+  font-family: Roboto;
 }

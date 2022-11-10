@@ -13,9 +13,7 @@ countriesRoute.get('/', async (req, res) => {
     let { name } = req.query
     try {
         if (!name) {
-            const countries = await Country.findAll({
-                attributes: ['name', 'flag', 'continent']
-            })
+            let countries = await Country.findAll()
             if (!countries.length) {
                 const response = await axios.get('https://restcountries.com/v3/all')
 
@@ -26,33 +24,34 @@ countriesRoute.get('/', async (req, res) => {
                         flag: d.flags[1],
                         continent: d.continents[0],
                         subRegion: d.subregion,
-                        capital: d.capital ? d.capital[0] : "",
+                        capital: d.capital ? d.capital[0] : "N/A",
                         population: d.population,
                         area: d.area
                     })
                 })
                 await Country.bulkCreate(countries)
             }
-            return res.status(200).json(countries.map(c => (
+            countries = countries.map(c => (
                 {
+                    id: c.id,
                     name: c.name,
                     flag: c.flag,
                     continent: c.continent
                 }
-            )))
+            ))
+            return res.status(200).json(countries)
         }
         name = name[0].toUpperCase() + name.slice(1)
         // console.log(name);
         const countries = await Country.findAll({
-            attributes: ['name', 'flag', 'continent'],
+            attributes: ['id', 'name', 'flag', 'continent'],
             where: {
                 name: {
                     [Op.like]: `%${name}%`
                 }
             }
         })
-        let data = countries.length ? countries : 'Country not found'
-        return res.status(200).json(data)
+        return res.status(200).json(countries)
     } catch (error) {
         console.log(error);
         return res.status(500).send(error.message)
