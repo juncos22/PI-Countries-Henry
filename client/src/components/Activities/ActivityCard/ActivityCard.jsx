@@ -6,9 +6,25 @@ export default function ActivityCard({ name, difficulty, duration }) {
             <span className={styles.cardTitle}>{name}</span>
             <hr className={styles.cardDivider} />
             <span className={styles.cardText}>Dificultad</span>
-            <span>{difficulty}</span>
+            <div className="row">
+                {
+                    range(1, difficulty).map(d => (
+                        <span key={d} className={styles.difficultyRating}></span>
+                    ))
+                }
+            </div>
             <hr className={styles.cardDivider} />
-            <span className={styles.cardText}>Duracion: {duration} min.</span>
+            <span className={styles.cardText}>Duración: {duration} min.</span>
         </div>
     )
+}
+
+function range(from, to, step = 1) {
+    let i = from
+    const rangeArr = []
+    while (i <= to) {
+        rangeArr.push(i)
+        i += step
+    }
+    return rangeArr
 }
