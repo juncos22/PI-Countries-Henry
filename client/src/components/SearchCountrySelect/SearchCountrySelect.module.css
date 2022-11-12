@@ -1,0 +1,17 @@
+.searchContent {
+    border: 1px solid #FF5722;
+    border-radius: 20px;
+    width: fit-content;
+    margin-right: auto;
+    margin-bottom: 5px;
+}
+
+.searchInput {
+    width: fit-content;
+    background: transparent;
+    border-style: none;
+    border: 1px solid #FF5722;
+    border-radius: 20px;
+    font-size: 18px;
+    padding-left: 10px;
+}

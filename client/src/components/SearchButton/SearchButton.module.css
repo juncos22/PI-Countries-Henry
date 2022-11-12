@@ -1,0 +1,26 @@
+.btnSearch {
+    border: none;
+    background-color: #FF5722;
+    color: #212121;
+    border-radius: 20px;
+    width: 130px;
+    height: 30px;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: ease-in 0.3s;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btnContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btnSearch:hover {
+    background-color: #536DFE;
+    color: #FFFFFF;
+}

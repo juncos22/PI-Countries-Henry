@@ -1,7 +1,8 @@
-import { CREATE_ACTIVITY, CREATING_ACTIVITY } from "../actions/activityActions";
+import { CREATE_ACTIVITY, CREATING_ACTIVITY, GET_ACTIVITIES } from "../actions/activityActions";
 
 const initialState = {
     activity: {},
+    activities: [],
     loading: false
 }
 
@@ -17,6 +18,11 @@ export default function activityReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 activity: action.payload
+            }
+        case GET_ACTIVITIES:
+            return {
+                ...state,
+                activities: action.payload
             }
         default:
             return { ...state }

@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { connect } from "react-redux";
 import { createActivity } from "../../redux/actions/activityActions";
-import { getAllCountries } from "../../redux/actions/countryActions";
+import { filterCountriesByName, getAllCountries } from "../../redux/actions/countryActions";
 import Loader from "../Loader/Loader";
+import SearchCountrySelect from "../SearchCountrySelect/SearchCountrySelect";
 import styles from './Activities.module.css';
 
 export function Activities({
@@ -10,7 +11,8 @@ export function Activities({
     loadingCountries,
     savingActivity,
     loadCountries,
-    saveActivity }) {
+    saveActivity,
+    searchCountries }) {
     const [newActivity, setNewActivity] = useState({
         name: '',
         difficulty: 0,
@@ -31,6 +33,22 @@ export function Activities({
     const handleCountries = (e) => {
         newActivity.countries.push(e.target.value)
     }
+    const handleSearch = (e, countryName) => {
+        if (e.key === 'Enter') {
+            console.log(e.currentTarget.value);
+            console.log();
+            countryName = countryName[0].toUpperCase() + countryName.slice(1)
+            searchCountries(countryName)
+            // countries = countries.filter(c => c.name.toLowerCase() === countryName.toLowerCase())
+        }
+        // if (!countryName.length) {
+        //     loadCountries()
+        // }
+    }
+    useEffect(() => {
+        loadCountries()
+    }, [loadCountries])
+
     return (
         <div className={styles.container}>
             <h3 className={styles.title}>Nueva Actividad</h3>
@@ -104,10 +122,12 @@ export function Activities({
                             )
                         }
                         {
-                            !loadCountries && (
+                            !loadingCountries && (
                                 <>
                                     <label className={styles.inputLabel}
-                                        htmlFor="countries">Paises de la actividad</label>
+                                        htmlFor="countries">Paises para la actividad</label>
+
+                                    <SearchCountrySelect onSearch={handleSearch} />
                                     <select
                                         id="countries"
                                         name="countries"
@@ -142,7 +162,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadCountries: dispatch(getAllCountries()),
+        loadCountries: () => dispatch(getAllCountries()),
+        searchCountries: (name) => dispatch(filterCountriesByName(name)),
         saveActivity: (activity) => dispatch(createActivity(
             activity.name,
             activity.difficulty,

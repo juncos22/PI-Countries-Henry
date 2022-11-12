@@ -25,14 +25,3 @@
 .paginationItem:hover {
     color: #536DFE;
 }
-
-@media (max-width: 991px) {
-    .paginationItems {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        flex-wrap: wrap-reverse;
-        justify-content: space-evenly;
-        list-style: none;
-    }
-}

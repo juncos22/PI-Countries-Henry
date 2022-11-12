@@ -1,41 +1,123 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { usePagination } from "../../hooks/paginationHook";
-import { getAllCountries } from "../../redux/actions/countryActions";
+import { getActivities } from "../../redux/actions/activityActions";
+import {
+    // filterByActivity,
+    // filterByContinent,
+    filterCountriesByName,
+    getAllCountries,
+    getContinents,
+    // orderByName,
+    // orderByPopulation
+} from "../../redux/actions/countryActions";
 import ComboBoxContinente from "../ComboBox/ComboBox";
 import ComboBoxActividad from '../ComboBox/ComboBox';
 import ComboBoxOrdenamiento from '../ComboBox/ComboBox';
 import Loader from "../Loader/Loader";
 import Pagination from "../Pagination/Pagination";
+import SearchButton from "../SearchButton/SearchButton";
 import SearchCountries from "../SearchCountries/SearchCountries";
 import CountryCard from "./CountryCard/CountryCard";
 
-export function Countries({ countries, loading, loadCountries }) {
+export function Countries({
+    countries,
+    loading,
+    loadCountries,
+    searchByName,
+    loadActivities,
+    activities,
+    // filterByActivity,
+    continents,
+    loadContinents,
+    // filterByContinent,
+    // orderByName,
+    // orderByPopulation 
+}) {
+
+    const [page, setPage] = useState(0)
+    const queryParams = []
 
     useEffect(() => {
         loadCountries()
-    }, [loadCountries])
-    const [page, setPage] = useState(1)
-    const pageSize = 10
-    const pageCount = Math.ceil(countries.length / pageSize)
-    const pagination = usePagination(countries, pageSize)
+        loadActivities()
+        loadContinents()
+    }, [loadCountries, loadActivities, loadContinents])
 
-    const handlePage = (e, page) => {
-        console.log(page);
-        setPage(page)
-        pagination.jump(page)
+    const paginatedCountries = () => {
+        return countries.slice(page, page === 0 ? page + 9 : page + 10)
     }
 
+    const nextPage = () => {
+        if (countries.length > page + 10) {
+            setPage(page => page + 10)
+        }
+    }
+    const prevPage = () => {
+        if (page > 0) {
+            setPage(page => page - 10)
+        }
+    }
     const searchCountries = (e) => {
-        console.log(e.target.value);
+        // console.log(e.key);
+        // if (e.target.value.length) {
+        //     setPage(0)
+        //     searchByName(e.target.value)
+        // } else {
+        //     loadCountries()
+        // }
+        if (e.target.value.length) {
+            let name = e.target.value
+            name = name[0].toUpperCase() + name.slice(1)
+            searchByName(name)
+        }
     }
+
+    const onSearch = () => {
+        setPage(0)
+        loadCountries(queryParams)
+    }
+
     const searchByContinent = (e) => {
         console.log(e.target.value);
+
+        if (e.target.value.length) {
+            queryParams.push({ continent: e.target.value })
+        } else {
+            loadCountries()
+        }
     }
     const searchByActividad = (e) => {
         console.log(e.target.value);
+
+        if (Number(e.target.value) > 0) {
+            queryParams.push({ activityId: Number(e.target.value) })
+        } else {
+            loadCountries()
+        }
     }
     const orderBy = (e) => {
+        const order = e.target.value
+        switch (order) {
+            case 'Nombre: A - Z':
+                queryParams.push({ orderByName: 'ASC' })
+                // orderByName('ASC')
+                break;
+            case 'Nombre: Z - A':
+                queryParams.push({ orderByName: 'DESC' })
+                // orderByName('DESC')
+                break;
+            case 'Poblacion: Asc.':
+                queryParams.push({ orderByPopulation: 'ASC' })
+                // orderByPopulation('ASC')
+                break;
+            case 'Poblacion: Desc.':
+                queryParams.push({ orderByPopulation: 'DESC' })
+                // orderByPopulation('DESC')
+                break;
+            default:
+                loadCountries()
+                break;
+        }
         console.log(e.target.value);
     }
 
@@ -45,40 +127,56 @@ export function Countries({ countries, loading, loadCountries }) {
                 <div className="col">
                     <SearchCountries onSearch={searchCountries} />
                 </div>
+                {
+                    continents.length > 0 && (
+                        <div className="col">
+                            <ComboBoxContinente label={'Filtrar por continente'}
+                                onSelected={searchByContinent}
+                                data={continents} />
+                        </div>
+                    )
+                }
+                {
+                    activities.length > 0 && (
+                        <div className="col">
+                            <ComboBoxActividad label="Filtrar por actividad"
+                                onSelected={searchByActividad}
+                                data={activities} />
+                        </div>
+                    )
+                }
                 <div className="col">
-                    <ComboBoxContinente onSelected={searchByContinent} data={
-                        ['Continente 1',
-                            'Continente 2',
-                            'Continente 3']} />
+                    <ComboBoxOrdenamiento
+                        label={'Ordenamientos'}
+                        onSelected={orderBy}
+                        data={[
+                            'Nombre: A - Z',
+                            'Nombre: Z - A',
+                            'Poblacion: Asc.',
+                            'Poblacion: Desc.'
+                        ]} />
                 </div>
                 <div className="col">
-                    <ComboBoxActividad onSelected={searchByActividad} data={
-                        ['Actividad 1',
-                            'Actividad 2',
-                            'Actividad 3']} />
-                </div>
-                <div className="col">
-                    <ComboBoxOrdenamiento onSelected={orderBy} data={[
-                        'Nombre: A - Z',
-                        'Nombre: Z - A',
-                        'Poblacion: Asc.',
-                        'Poblacion: Desc.'
-                    ]} />
+                    <SearchButton onSearch={onSearch} />
                 </div>
             </div>
             {
                 countries && countries.length > 0 && (
                     <div className="row">
-                        <Pagination count={pageCount} page={page} onChange={handlePage} />
+                        <Pagination onNextPage={nextPage} onPrevPage={prevPage} />
+                    </div>
+                )
+            }
+            {
+                loading && (
+                    <div className="col">
+                        <Loader />
                     </div>
                 )
             }
             <div className="row">
                 {
-                    loading && <Loader />
-                }
-                {
-                    pagination.actualData().map((c, i) => (
+                    countries && paginatedCountries().map((c, i) => (
                         <div key={i} className="col">
                             <CountryCard
                                 id={c.id}
@@ -97,13 +195,22 @@ export function Countries({ countries, loading, loadCountries }) {
 function mapStateToProps(state) {
     return {
         countries: state.countryReducer.countries,
-        loading: state.countryReducer.loading
+        loading: state.countryReducer.loading,
+        activities: state.activityReducer.activities,
+        continents: state.countryReducer.continents
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadCountries: () => dispatch(getAllCountries())
+        loadCountries: (queryParams) => dispatch(getAllCountries(queryParams)),
+        searchByName: (name) => dispatch(filterCountriesByName(name)),
+        loadActivities: () => dispatch(getActivities()),
+        loadContinents: () => dispatch(getContinents()),
+        // filterByActivity: (activityId) => dispatch(filterByActivity(activityId)),
+        // filterByContinent: (continent) => dispatch(filterByContinent(continent)),
+        // orderByName: (order) => dispatch(orderByName(order)),
+        // orderByPopulation: (order) => dispatch(orderByPopulation(order)),
     }
 }
 

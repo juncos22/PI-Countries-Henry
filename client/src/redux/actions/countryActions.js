@@ -6,78 +6,120 @@ export const FILTER_COUNTRIES_BY_NAME = 'FILTER_COUNTRIES_BY_NAME'
 export const FIND_COUNTRY_BY_ID = 'FIND_COUNTRY_BY_ID'
 export const FILTER_BY_CONTINENT = 'FILTER_BY_CONTINENT'
 export const FILTER_BY_ACTIVITY = 'FILTER_BY_ACTIVITY'
-export const ORDER_BY_NAME_ASC = 'ORDER_BY_NAME'
-export const ORDER_BY_NAME_DESC = 'ORDER_BY_NAME_DESC'
-export const ORDER_BY_POPULATION_ASC = 'ORDER_BY_POPULATION_ASC'
-export const ORDER_BY_POPULATION_DESC = 'ORDER_BY_POPULATION_DESC'
+export const ORDER_BY_NAME = 'ORDER_BY_NAME'
+export const ORDER_BY_POPULATION = 'ORDER_BY_POPULATION'
+export const GET_CONTINENTS = 'GET_CONTINENTS'
 
 const baseUrl = 'http://localhost:3001';
 
-export function getAllCountries() {
-    return function (dispatch) {
-        dispatch({ type: GET_COUNTRIES })
-        axios.get(`${baseUrl}/countries`)
-            .then(res => dispatch({ type: GET_ALL_COUNTRIES, payload: res.data }))
-            .catch(error => console.log(error))
+export function getAllCountries(queryParams) {
+    let params = ""
+    if (queryParams) {
+        queryParams.forEach(qp => {
+            for (const key in qp) {
+                if (Object.hasOwnProperty.call(qp, key)) {
+                    // console.log(key, qp[key]);
+                    params += `${key}=${qp[key]}&`
+                }
+            }
+        })
+    }
+    return async function (dispatch) {
+        try {
+            dispatch({ type: GET_COUNTRIES })
+            const res = await axios.get(`${baseUrl}/countries?${params}`)
+            dispatch({ type: GET_ALL_COUNTRIES, payload: res.data })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
 export function filterCountriesByName(name) {
-    return function (dispatch) {
-        dispatch({ type: GET_COUNTRIES })
-        axios.get(`${baseUrl}/countries?name=${name}`)
-            .then(res => {
-                console.log(res.data);
-                dispatch({ type: FILTER_COUNTRIES_BY_NAME, payload: res.data })
-            }).catch(error => console.log(error))
+    return async function (dispatch) {
+        try {
+            dispatch({ type: GET_COUNTRIES })
+            const res = await axios.get(`${baseUrl}/countries?name=${name}`)
+            dispatch({ type: FILTER_COUNTRIES_BY_NAME, payload: res.data })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
 export function findCountryById(idPais) {
-    return function (dispatch) {
-        dispatch({ type: GET_COUNTRIES })
-        axios.get(`${baseUrl}/countries/${idPais}`)
-            .then(res => {
-                console.log(res.data);
-                dispatch({ type: FIND_COUNTRY_BY_ID, payload: res.data })
-            }).catch(error => console.log(error))
+    return async function (dispatch) {
+        try {
+            dispatch({ type: GET_COUNTRIES })
+            const res = await axios.get(`${baseUrl}/countries/${idPais}`)
+            dispatch({ type: FIND_COUNTRY_BY_ID, payload: res.data })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
+
+export function getContinents() {
+    return async function (dispatch) {
+        try {
+            const res = await axios.get(`${baseUrl}/continents`)
+            dispatch({ type: GET_CONTINENTS, payload: res.data })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+// export function filterByContinent(continent) {
+//     return {
+//         type: FILTER_BY_CONTINENT,
+//         payload: continent
+//     }
+// }
 
 export function filterByContinent(continent) {
-    return {
-        type: FILTER_BY_CONTINENT,
-        payload: continent
+    return async function (dispatch) {
+        try {
+            // dispatch({ type: GET_COUNTRIES })
+            const res = await axios.get(`${baseUrl}/countries?continent=${continent}`)
+            dispatch({ type: FILTER_BY_CONTINENT, payload: res.data })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
-export function filterByActivity(activity) {
-    return {
-        type: FILTER_BY_ACTIVITY,
-        payload: activity
+// export function filterByActivity(activityId) {
+//     return async function (dispatch) {
+//         try {
+//             dispatch({ type: GET_COUNTRIES })
+//             const res = await axios.get(`${baseUrl}/countries/activity/${activityId}`)
+//             dispatch({ type: FILTER_BY_ACTIVITY, payload: res.data })
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// }
+// order puede ser ASC o DESC
+export function orderByName(order) {
+    return async function (dispatch) {
+        try {
+            dispatch({ type: GET_COUNTRIES })
+            const res = await axios.get(`${baseUrl}/countries?orderByName=${order}`)
+            dispatch({ type: ORDER_BY_NAME, payload: res.data })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
-
-export function orderByNameAsc() {
-    return {
-        type: ORDER_BY_NAME_ASC
-    }
-}
-
-export function orderByNameDesc() {
-    return {
-        type: ORDER_BY_NAME_DESC
-    }
-}
-
-export function orderByPopulationAsc() {
-    return {
-        type: ORDER_BY_POPULATION_ASC
-    }
-}
-
-export function orderByPopulationDesc() {
-    return {
-        type: ORDER_BY_POPULATION_DESC
+// order puede ser ASC o DESC
+export function orderByPopulation(order) {
+    return async function (dispatch) {
+        try {
+            dispatch({ type: GET_COUNTRIES })
+            const res = await axios.get(`${baseUrl}/countries?orderByPopulation=${order}`)
+            dispatch({ type: ORDER_BY_POPULATION, payload: res.data })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
