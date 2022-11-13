@@ -24,9 +24,25 @@
     cursor: pointer;
     text-align: center;
     text-decoration: none;
+    transition: ease-in 0.3s;
 }
 
 .welcomeButton:hover {
     background-color: #536DFE;
     color: #FFFFFF;
+}
+
+.redesIcons {
+    cursor: pointer;
+    transition: ease-out 0.2s;
+}
+
+.redesIcons:hover {
+    width: 60px;
+}
+
+.copyText {
+    color: #E64A19;
+    font-size: 18px;
+    text-align: center;
 }

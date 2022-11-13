@@ -66,6 +66,22 @@ countriesRoute.get('/', async (req, res) => {
             ]
         }
     }
+    if (activityId) {
+        let countryXActivities = await conn.model('CountryActivities').findAll({
+            where: {
+                ActivityId: Number(activityId)
+            }
+        })
+        options = {
+            ...options,
+            where: {
+                id: {
+                    [Op.in]: countryXActivities.map(c => c.CountryId)
+                }
+            }
+        }
+    }
+
     try {
         let countries = await conn.model('Countries').findAll(options)
         if (!countries.length) {

@@ -69,57 +69,40 @@ export function getContinents() {
         }
     }
 }
+
 // export function filterByContinent(continent) {
-//     return {
-//         type: FILTER_BY_CONTINENT,
-//         payload: continent
-//     }
-// }
-
-export function filterByContinent(continent) {
-    return async function (dispatch) {
-        try {
-            // dispatch({ type: GET_COUNTRIES })
-            const res = await axios.get(`${baseUrl}/countries?continent=${continent}`)
-            dispatch({ type: FILTER_BY_CONTINENT, payload: res.data })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
-
-// export function filterByActivity(activityId) {
 //     return async function (dispatch) {
 //         try {
-//             dispatch({ type: GET_COUNTRIES })
-//             const res = await axios.get(`${baseUrl}/countries/activity/${activityId}`)
-//             dispatch({ type: FILTER_BY_ACTIVITY, payload: res.data })
+//             // dispatch({ type: GET_COUNTRIES })
+//             const res = await axios.get(`${baseUrl}/countries?continent=${continent}`)
+//             dispatch({ type: FILTER_BY_CONTINENT, payload: res.data })
 //         } catch (error) {
 //             console.log(error);
 //         }
 //     }
 // }
-// order puede ser ASC o DESC
-export function orderByName(order) {
-    return async function (dispatch) {
-        try {
-            dispatch({ type: GET_COUNTRIES })
-            const res = await axios.get(`${baseUrl}/countries?orderByName=${order}`)
-            dispatch({ type: ORDER_BY_NAME, payload: res.data })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
-// order puede ser ASC o DESC
-export function orderByPopulation(order) {
-    return async function (dispatch) {
-        try {
-            dispatch({ type: GET_COUNTRIES })
-            const res = await axios.get(`${baseUrl}/countries?orderByPopulation=${order}`)
-            dispatch({ type: ORDER_BY_POPULATION, payload: res.data })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
+
+// // order puede ser ASC o DESC
+// export function orderByName(order) {
+//     return async function (dispatch) {
+//         try {
+//             dispatch({ type: GET_COUNTRIES })
+//             const res = await axios.get(`${baseUrl}/countries?orderByName=${order}`)
+//             dispatch({ type: ORDER_BY_NAME, payload: res.data })
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// }
+// // order puede ser ASC o DESC
+// export function orderByPopulation(order) {
+//     return async function (dispatch) {
+//         try {
+//             dispatch({ type: GET_COUNTRIES })
+//             const res = await axios.get(`${baseUrl}/countries?orderByPopulation=${order}`)
+//             dispatch({ type: ORDER_BY_POPULATION, payload: res.data })
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// }
