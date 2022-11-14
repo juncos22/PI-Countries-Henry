@@ -48,12 +48,13 @@
     height: 31px;
     border: none;
     cursor: pointer;
-    transition: ease-out 0.3s;
+    transition: ease-in-out 0.3s;
 }
 
 .btnForm:hover {
-    background-color: #536DFE;
-    color: #FFFFFF;
+    background-color: #FFCCBC;
+    color: #212121;
+    font-weight: 600;
 }
 
 .title {
@@ -93,6 +94,27 @@
         width: min-content;
     }
 }
+
+.errorInput {
+    border: 1px solid red;
+}
+
+.errorMessage {
+    color: white;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: red;
+    border-radius: 3px;
+    width: max-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    transition: ease-out 0.2s;
+    margin-left: auto;
+}
+
 
 /* 
 .multiselectDropdown {

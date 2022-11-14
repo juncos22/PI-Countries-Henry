@@ -12,7 +12,7 @@ const { Countries, Activities, CountryActivities, conn, Op } = require('../db');
 countriesRoute.get('/', async (req, res) => {
     let { name, continent, orderByName, activityId, orderByPopulation } = req.query
 
-    console.log(name, continent, activityId, orderByName, orderByPopulation);
+    // console.log(name, continent, activityId, orderByName, orderByPopulation);
     let options = {
         attributes: ['id', 'name', 'flag', 'continent']
         // where: {

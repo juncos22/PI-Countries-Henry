@@ -17,6 +17,13 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isNotNull(value) {
+          if (value === null) {
+            throw new Error('It requires a valid name')
+          }
+        }
+      }
     },
     flag: {
       type: DataTypes.STRING,

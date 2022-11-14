@@ -20,15 +20,50 @@ export function Activities({
         season: '',
         countries: []
     })
+    const [errors, setErrors] = useState({
+        name: '',
+        difficulty: '',
+        duration: '',
+        season: '',
+        countries: ''
+    })
+
     const seasons = ['Primavera', 'Verano', 'Otoño', 'Invierno']
     const handleActivity = (e) => {
         setNewActivity({ ...newActivity, [e.target.name]: e.target.value })
     }
+
     const onSubmitActivity = (e) => {
         e.preventDefault();
-        console.log(newActivity);
-        saveActivity(newActivity)
-        setNewActivity({ name: '', difficulty: 0, duration: 0, countries: [] })
+
+        if (!newActivity.name
+            || !newActivity.difficulty
+            || !newActivity.duration
+            || !newActivity.season
+            || !newActivity.countries.length) {
+
+            setErrors({
+                ...errors,
+                name: !newActivity.name ? 'Ingrese un nombre' : '',
+                difficulty: !newActivity.difficulty
+                    || newActivity.difficulty < 1
+                    || newActivity.difficulty > 5 ? 'Ingrese una dificultad entre 1 y 5' : '',
+                duration: !newActivity.duration ? 'Ingrese una duracion en min.' : '',
+                season: !newActivity.season ? 'Elija una temporada' : '',
+                countries: !newActivity.countries.length ? 'Elija al menos un pais' : ''
+            })
+        }
+        else {
+            setErrors({
+                name: '',
+                difficulty: 0,
+                duration: 0,
+                season: '',
+                countries: []
+            })
+            saveActivity(newActivity)
+            setNewActivity({ name: '', difficulty: 0, duration: 0, season: '', countries: [] })
+        }
     }
     const handleCountries = (e) => {
         newActivity.countries.push(e.target.value)
@@ -58,43 +93,65 @@ export function Activities({
                         <label className={styles.inputLabel} htmlFor="name">Nombre de la actividad</label>
                         <input type="text"
                             id="name"
-                            className={styles.inputForm}
+                            className={`${styles.inputForm} ${errors.name
+                                ? styles.errorInput : ''}`}
                             name="name"
                             placeholder="Nombre de la actividad"
-                            required
                             value={newActivity.name}
                             onChange={handleActivity} />
+                        {
+                            errors.name && (
+                                <span className={styles.errorMessage}>
+                                    {errors.name}
+                                </span>
+                            )
+                        }
 
                         <label className={styles.inputLabel}
                             htmlFor="difficulty">Dificultad</label>
                         <input type="number"
-                            className={styles.inputForm}
+                            className={`${styles.inputForm} ${errors.difficulty
+                                ? styles.errorInput : ''}`}
                             id="difficulty"
                             name="difficulty"
-                            min={1} max={5}
                             placeholder={"Dificultad"}
-                            required
                             value={newActivity.difficulty}
                             onChange={handleActivity} />
+                        {
+                            errors.difficulty && (
+                                <span className={styles.errorMessage}>
+                                    {errors.difficulty}
+                                </span>
+                            )
+                        }
+
 
                         <label className={styles.inputLabel}
-                            htmlFor="duration">Duraction (min.)</label>
+                            htmlFor="duration">Duración (min.)</label>
                         <input type="number"
-                            className={styles.inputForm}
+                            className={`${styles.inputForm} ${errors.duration
+                                ? styles.errorInput : ''}`}
                             id="duration"
                             name="duration"
                             placeholder="Duracion (min.)"
-                            required
                             value={newActivity.duration}
                             onChange={handleActivity} />
+
+                        {
+                            errors.duration && (
+                                <span className={styles.errorMessage}>
+                                    {errors.duration}
+                                </span>
+                            )
+                        }
 
                         <label className={styles.inputLabel}
                             htmlFor="season">Temporada</label>
                         <select name="season"
                             id="season"
                             value={newActivity.season}
-                            className={styles.inputSelect}
-                            required
+                            className={`${styles.inputSelect} ${errors.season
+                                ? styles.errorInput : ''}`}
                             placeholder="Temporada"
                             onChange={handleActivity}>
                             <option value="">Temporada</option>
@@ -104,6 +161,14 @@ export function Activities({
                                 ))
                             }
                         </select>
+                        {
+                            errors.season && (
+                                <span className={styles.errorMessage}>
+                                    {errors.season}
+                                </span>
+                            )
+                        }
+
                         {
                             savingActivity && (
                                 <Loader />
@@ -133,8 +198,8 @@ export function Activities({
                                         name="countries"
                                         value={newActivity.countries}
                                         onChange={handleCountries}
-                                        required
-                                        className={styles.inputMultiSelect}
+                                        className={`${styles.inputMultiSelect} ${errors.countries.length > 0
+                                            ? styles.errorInput : ''}`}
                                         multiple={true}
                                     >
                                         {
@@ -143,6 +208,13 @@ export function Activities({
                                             ))
                                         }
                                     </select>
+                                    {
+                                        errors.countries.length > 0 && (
+                                            <span className={styles.errorMessage}>
+                                                {errors.countries}
+                                            </span>
+                                        )
+                                    }
                                 </>
                             )
                         }
