@@ -7,14 +7,17 @@ import {
     GET_CONTINENTS,
     GET_COUNTRIES,
     ORDER_BY_NAME,
-    ORDER_BY_POPULATION
+    ORDER_BY_POPULATION,
+    GET_ERROR,
+    CLEAN_ERROR
 } from "../actions/countryActions";
 
 const initialState = {
     countries: [],
     countryDetail: {},
     continents: [],
-    loading: false
+    loading: false,
+    error: ''
 }
 
 export default function countryReducer(state = initialState, action) {
@@ -68,7 +71,18 @@ export default function countryReducer(state = initialState, action) {
         case GET_CONTINENTS:
             return {
                 ...state,
-                continents: action.payload.map(c => c.continent)
+                continents: action.payload
+            }
+        case GET_ERROR:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false
+            }
+        case CLEAN_ERROR:
+            return {
+                ...state,
+                error: ''
             }
         default:
             return { ...state }

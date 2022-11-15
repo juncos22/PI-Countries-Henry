@@ -84,7 +84,12 @@ countriesRoute.get('/', async (req, res) => {
 
     try {
         let countries = await conn.model('Countries').findAll(options)
-        if (!countries.length) {
+        if (!countries.length
+            && !name
+            && !continent
+            && !activityId
+            && !orderByName
+            && !orderByPopulation) {
             const response = await axios.get('https://restcountries.com/v3/all')
 
             response.data.map(d => {

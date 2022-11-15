@@ -9,6 +9,8 @@ export const FILTER_BY_ACTIVITY = 'FILTER_BY_ACTIVITY'
 export const ORDER_BY_NAME = 'ORDER_BY_NAME'
 export const ORDER_BY_POPULATION = 'ORDER_BY_POPULATION'
 export const GET_CONTINENTS = 'GET_CONTINENTS'
+export const GET_ERROR = 'GET_ERROR'
+export const CLEAN_ERROR = 'CLEAN_ERROR'
 
 const baseUrl = 'http://localhost:3001';
 
@@ -31,6 +33,10 @@ export function getAllCountries(queryParams) {
             dispatch({ type: GET_ALL_COUNTRIES, payload: res.data })
         } catch (error) {
             console.log(error);
+            dispatch({ type: GET_ERROR, payload: error.message })
+            setTimeout(() => {
+                dispatch({ type: CLEAN_ERROR })
+            }, 2000);
         }
     }
 }
@@ -43,6 +49,10 @@ export function filterCountriesByName(name) {
             dispatch({ type: FILTER_COUNTRIES_BY_NAME, payload: res.data })
         } catch (error) {
             console.log(error);
+            dispatch({ type: GET_ERROR, payload: error.message })
+            setTimeout(() => {
+                dispatch({ type: CLEAN_ERROR })
+            }, 2000);
         }
     }
 }
@@ -55,6 +65,10 @@ export function findCountryById(idPais) {
             dispatch({ type: FIND_COUNTRY_BY_ID, payload: res.data })
         } catch (error) {
             console.log(error);
+            dispatch({ type: GET_ERROR, payload: error.message })
+            setTimeout(() => {
+                dispatch({ type: CLEAN_ERROR })
+            }, 2000);
         }
     }
 }
@@ -66,43 +80,10 @@ export function getContinents() {
             dispatch({ type: GET_CONTINENTS, payload: res.data })
         } catch (error) {
             console.log(error);
+            dispatch({ type: GET_ERROR, payload: error.message })
+            setTimeout(() => {
+                dispatch({ type: CLEAN_ERROR })
+            }, 2000);
         }
     }
 }
-
-// export function filterByContinent(continent) {
-//     return async function (dispatch) {
-//         try {
-//             // dispatch({ type: GET_COUNTRIES })
-//             const res = await axios.get(`${baseUrl}/countries?continent=${continent}`)
-//             dispatch({ type: FILTER_BY_CONTINENT, payload: res.data })
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// }
-
-// // order puede ser ASC o DESC
-// export function orderByName(order) {
-//     return async function (dispatch) {
-//         try {
-//             dispatch({ type: GET_COUNTRIES })
-//             const res = await axios.get(`${baseUrl}/countries?orderByName=${order}`)
-//             dispatch({ type: ORDER_BY_NAME, payload: res.data })
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// }
-// // order puede ser ASC o DESC
-// export function orderByPopulation(order) {
-//     return async function (dispatch) {
-//         try {
-//             dispatch({ type: GET_COUNTRIES })
-//             const res = await axios.get(`${baseUrl}/countries?orderByPopulation=${order}`)
-//             dispatch({ type: ORDER_BY_POPULATION, payload: res.data })
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// }

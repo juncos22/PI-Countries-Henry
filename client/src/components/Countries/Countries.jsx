@@ -1,3 +1,4 @@
+import styles from './Countries.module.css';
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getActivities } from "../../redux/actions/activityActions";
@@ -26,12 +27,9 @@ export function Countries({
     searchByName,
     loadActivities,
     activities,
-    // filterByActivity,
     continents,
     loadContinents,
-    // filterByContinent,
-    // orderByName,
-    // orderByPopulation 
+    countryError
 }) {
 
     const [page, setPage] = useState(0)
@@ -58,13 +56,7 @@ export function Countries({
         }
     }
     const searchCountries = (e) => {
-        // console.log(e.key);
-        // if (e.target.value.length) {
-        //     setPage(0)
-        //     searchByName(e.target.value)
-        // } else {
-        //     loadCountries()
-        // }
+
         if (e.target.value.length) {
             let name = e.target.value
             name = name[0].toUpperCase() + name.slice(1)
@@ -161,6 +153,13 @@ export function Countries({
                 </div>
             </div>
             {
+                countryError && (
+                    <div className="row">
+                        <span className={styles.errorMessage}>{countryError}</span>
+                    </div>
+                )
+            }
+            {
                 countries && countries.length > 0 && (
                     <div className="row">
                         <Pagination onNextPage={nextPage} onPrevPage={prevPage} />
@@ -197,7 +196,8 @@ function mapStateToProps(state) {
         countries: state.countryReducer.countries,
         loading: state.countryReducer.loading,
         activities: state.activityReducer.activities,
-        continents: state.countryReducer.continents
+        continents: state.countryReducer.continents,
+        countryError: state.countryReducer.error
     }
 }
 

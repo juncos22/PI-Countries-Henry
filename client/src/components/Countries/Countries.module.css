@@ -1,0 +1,15 @@
+.errorMessage {
+    color: white;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: red;
+    border-radius: 3px;
+    width: max-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    transition: ease-out 0.2s;
+    margin-left: auto;
+}

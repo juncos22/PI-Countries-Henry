@@ -12,7 +12,10 @@ export function Activities({
     savingActivity,
     loadCountries,
     saveActivity,
-    searchCountries }) {
+    searchCountries,
+    countryError,
+    activityError
+}) {
     const [newActivity, setNewActivity] = useState({
         name: '',
         difficulty: 0,
@@ -87,6 +90,16 @@ export function Activities({
     return (
         <div className={styles.container}>
             <h3 className={styles.title}>Nueva Actividad</h3>
+            {
+                countryError && (
+                    <span className={styles.errorMessage}>{countryError}</span>
+                )
+            }
+            {
+                activityError && (
+                    <span className={styles.errorMessage}>{activityError}</span>
+                )
+            }
             <form className={styles.formContent} onSubmit={onSubmitActivity}>
                 <div className="row">
                     <div className="col">
@@ -229,7 +242,9 @@ const mapStateToProps = (state) => {
     return {
         countries: state.countryReducer.countries,
         savingActivity: state.activityReducer.loading,
-        loadingCountries: state.countryReducer.loading
+        loadingCountries: state.countryReducer.loading,
+        countryError: state.countryReducer.error,
+        activityError: state.activityReducer.error
     }
 }
 const mapDispatchToProps = (dispatch) => {
