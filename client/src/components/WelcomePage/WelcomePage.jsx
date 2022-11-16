@@ -5,7 +5,7 @@ export default function WelcomePage() {
 
     return (
         <div className={styles.welcomeContent}>
-            <h1 className={styles.welcomeTitle}>Bienvenido <br /> a CountryFinder!</h1>
+            <h1 className={styles.welcomeTitle}>Bienvenido <br /> al PI - COUNTRIES!</h1>
             <Link to={'/countries'}>
                 <button className={styles.welcomeButton}>Ingresar</button>
             </Link>
