@@ -113,6 +113,7 @@ export function Activities({
         console.log(newActivity);
         saveActivity(newActivity)
         setNewActivity({ name: '', difficulty: 0, duration: 0, season: '', countries: [] })
+        loadCountries()
     }
     const handleSearch = (e, countryName) => {
         if (e.key === 'Enter') {

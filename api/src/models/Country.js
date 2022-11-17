@@ -47,8 +47,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       get() {
-        let km2 = this.getDataValue('area') * 0.000001
-        return `${Math.round((km2 + Number.EPSILON) * 100) / 100} km2`
+        return `${this.getDataValue('area')} km2`
       }
     }
   }, {
