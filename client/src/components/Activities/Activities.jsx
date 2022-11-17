@@ -32,44 +32,87 @@ export function Activities({
     })
 
     const seasons = ['Primavera', 'Verano', 'Otoño', 'Invierno']
-    const handleActivity = (e) => {
-        setNewActivity({ ...newActivity, [e.target.name]: e.target.value })
-    }
-
-    const onSubmitActivity = (e) => {
-        e.preventDefault();
-
-        if (!newActivity.name
-            || !newActivity.difficulty
-            || !newActivity.duration
-            || !newActivity.season
-            || !newActivity.countries.length) {
-
+    const handleName = (e) => {
+        if (!e.target.value) {
             setErrors({
                 ...errors,
-                name: !newActivity.name ? 'Ingrese un nombre' : '',
-                difficulty: !newActivity.difficulty
-                    || newActivity.difficulty < 1
-                    || newActivity.difficulty > 5 ? 'Ingrese una dificultad entre 1 y 5' : '',
-                duration: !newActivity.duration ? 'Ingrese una duracion en min.' : '',
-                season: !newActivity.season ? 'Elija una temporada' : '',
-                countries: !newActivity.countries.length ? 'Elija al menos un pais' : ''
+                name: 'Ingrese un nombre',
             })
         }
         else {
             setErrors({
-                name: '',
-                difficulty: 0,
-                duration: 0,
-                season: '',
-                countries: []
+                ...errors,
+                name: ''
             })
-            saveActivity(newActivity)
-            setNewActivity({ name: '', difficulty: 0, duration: 0, season: '', countries: [] })
         }
+        setNewActivity((oldActivity) => ({ ...oldActivity, [e.target.name]: e.target.value }))
+    }
+    const handleDifficulty = (e) => {
+        if (!e.target.value || (Number(e.target.value) < 1 || Number(e.target.value) > 5)) {
+            setErrors({
+                ...errors,
+                difficulty: 'Ingrese una dificultad entre 1 y 5',
+            })
+        }
+        else {
+            setErrors({
+                ...errors,
+                difficulty: ''
+            })
+        }
+        setNewActivity((oldActivity) => ({ ...oldActivity, [e.target.name]: e.target.value }))
+    }
+    const handleDuration = (e) => {
+        if (!e.target.value || Number(e.target.value) < 1) {
+            setErrors({
+                ...errors,
+                duration: 'Ingrese una duracion en min.',
+            })
+        }
+        else {
+            setErrors({
+                ...errors,
+                duration: ''
+            })
+        }
+        setNewActivity((oldActivity) => ({ ...oldActivity, [e.target.name]: e.target.value }))
+    }
+    const handleSeason = (e) => {
+        if (!e.target.value) {
+            setErrors({
+                ...errors,
+                season: 'Elija una temporada',
+            })
+        }
+        else {
+            setErrors({
+                ...errors,
+                season: ''
+            })
+        }
+        setNewActivity((oldActivity) => ({ ...oldActivity, [e.target.name]: e.target.value }))
     }
     const handleCountries = (e) => {
-        newActivity.countries.push(e.target.value)
+        if (!e.target.value.length) {
+            setErrors({
+                ...errors,
+                countries: 'Elija al menos un pais',
+            })
+        }
+        else {
+            newActivity.countries.push(e.target.value)
+            setErrors({
+                ...errors,
+                countries: ''
+            })
+        }
+    }
+
+    const onSubmitActivity = (e) => {
+        e.preventDefault();
+        console.log(newActivity);
+        saveActivity(newActivity)
+        setNewActivity({ name: '', difficulty: 0, duration: 0, season: '', countries: [] })
     }
     const handleSearch = (e, countryName) => {
         if (e.key === 'Enter') {
@@ -111,7 +154,7 @@ export function Activities({
                             name="name"
                             placeholder="Nombre de la actividad"
                             value={newActivity.name}
-                            onChange={handleActivity} />
+                            onChange={handleName} />
                         {
                             errors.name && (
                                 <span className={styles.errorMessage}>
@@ -129,7 +172,7 @@ export function Activities({
                             name="difficulty"
                             placeholder={"Dificultad"}
                             value={newActivity.difficulty}
-                            onChange={handleActivity} />
+                            onChange={handleDifficulty} />
                         {
                             errors.difficulty && (
                                 <span className={styles.errorMessage}>
@@ -148,7 +191,7 @@ export function Activities({
                             name="duration"
                             placeholder="Duracion (min.)"
                             value={newActivity.duration}
-                            onChange={handleActivity} />
+                            onChange={handleDuration} />
 
                         {
                             errors.duration && (
@@ -166,7 +209,7 @@ export function Activities({
                             className={`${styles.inputSelect} ${errors.season
                                 ? styles.errorInput : ''}`}
                             placeholder="Temporada"
-                            onChange={handleActivity}>
+                            onChange={handleSeason}>
                             <option value="">Temporada</option>
                             {
                                 seasons.map((s, i) => (
@@ -189,7 +232,13 @@ export function Activities({
                         }
                         {
                             !savingActivity && (
-                                <button className={styles.btnForm}>Guardar Actividad</button>
+                                <button disabled={
+                                    !newActivity.name
+                                    || !newActivity.difficulty
+                                    || !newActivity.duration
+                                    || !newActivity.countries.length
+                                    || !newActivity.season
+                                } className={styles.btnForm}>Guardar Actividad</button>
                             )
                         }
                     </div>
