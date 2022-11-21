@@ -12,43 +12,22 @@ const { Countries, Activities, CountryActivities, conn, Op } = require('../db');
 countriesRoute.get('/', async (req, res) => {
     let { name, continent, orderByName, activityId, orderByPopulation } = req.query
 
+    const OR = []
     // console.log(name, continent, activityId, orderByName, orderByPopulation);
     let options = {
         attributes: ['id', 'name', 'flag', 'continent']
-        // where: {
-        //     [Op.or]: [
-        //         {
-        //             name: {
-        //                 [Op.like]: `%${name[0].toUpperCase() + name.slice(1)}%`
-        //             },
-        //         },
-        //         {
-        //             continent: continent,
-        //         }
-        //     ]
-        // },
-        // order: [
-        //     ['name', orderByName],
-        //     ['population', orderByPopulation]
-        // ]
     }
     if (name) {
-        options = {
-            ...options,
-            where: {
-                name: {
-                    [Op.like]: `%${name}%`
-                },
-            }
-        }
+        OR.push({
+            name: {
+                [Op.like]: `%${name}%`
+            },
+        })
     }
     if (continent) {
-        options = {
-            ...options,
-            where: {
-                continent: continent,
-            }
-        }
+        OR.push({
+            continent: continent,
+        })
     }
     if (orderByName) {
         options = {
@@ -72,16 +51,21 @@ countriesRoute.get('/', async (req, res) => {
                 ActivityId: Number(activityId)
             }
         })
+        OR.push({
+            id: {
+                [Op.in]: countryXActivities.map(c => c.CountryId)
+            }
+        })
+    }
+    if (OR.length) {
         options = {
             ...options,
             where: {
-                id: {
-                    [Op.in]: countryXActivities.map(c => c.CountryId)
-                }
+                [Op.or]: OR
             }
         }
     }
-
+    console.log(options);
     try {
         let countries = await conn.model('Countries').findAll(options)
         if (!countries.length
