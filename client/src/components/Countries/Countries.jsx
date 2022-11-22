@@ -38,8 +38,11 @@ export function Countries({
     useEffect(() => {
         loadCountries()
         loadActivities()
+    }, [])
+
+    useEffect(() => {
         loadContinents()
-    }, [loadCountries, loadActivities, loadContinents])
+    }, [])
 
     const paginatedCountries = () => {
         return countries.slice(page, page === 0 ? page + 9 : page + 10)
@@ -206,11 +209,7 @@ function mapDispatchToProps(dispatch) {
         loadCountries: (queryParams) => dispatch(getAllCountries(queryParams)),
         searchByName: (name) => dispatch(filterCountriesByName(name)),
         loadActivities: () => dispatch(getActivities()),
-        loadContinents: () => dispatch(getContinents()),
-        // filterByActivity: (activityId) => dispatch(filterByActivity(activityId)),
-        // filterByContinent: (continent) => dispatch(filterByContinent(continent)),
-        // orderByName: (order) => dispatch(orderByName(order)),
-        // orderByPopulation: (order) => dispatch(orderByPopulation(order)),
+        loadContinents: () => dispatch(getContinents())
     }
 }
 

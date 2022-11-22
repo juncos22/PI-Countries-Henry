@@ -115,17 +115,13 @@ export function Activities({
         setNewActivity({ name: '', difficulty: 0, duration: 0, season: '', countries: [] })
         loadCountries()
     }
-    const handleSearch = (e, countryName) => {
-        if (e.key === 'Enter') {
-            console.log(e.currentTarget.value);
-            console.log();
+    const handleSearch = (countryName) => {
+        if (countryName) {
             countryName = countryName[0].toUpperCase() + countryName.slice(1)
             searchCountries(countryName)
-            // countries = countries.filter(c => c.name.toLowerCase() === countryName.toLowerCase())
+        } else {
+            loadCountries()
         }
-        // if (!countryName.length) {
-        //     loadCountries()
-        // }
     }
     useEffect(() => {
         loadCountries()
@@ -233,13 +229,18 @@ export function Activities({
                         }
                         {
                             !savingActivity && (
-                                <button disabled={
-                                    !newActivity.name
-                                    || !newActivity.difficulty
-                                    || !newActivity.duration
-                                    || !newActivity.countries.length
-                                    || !newActivity.season
-                                } className={styles.btnForm}>Guardar Actividad</button>
+                                <button type="submit"
+                                    disabled={
+                                        !newActivity.name
+                                        || !newActivity.difficulty
+                                        || !newActivity.duration
+                                        || !newActivity.countries.length
+                                        || !newActivity.season
+                                    } className={`${!newActivity.name
+                                        || !newActivity.difficulty
+                                        || !newActivity.duration
+                                        || !newActivity.countries.length
+                                        || !newActivity.season ? styles.disabled : styles.btnForm}`}>Guardar Actividad</button>
                             )
                         }
                     </div>

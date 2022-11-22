@@ -1,9 +1,11 @@
 .searchContent {
-    border: 1px solid #FF5722;
-    border-radius: 20px;
-    width: fit-content;
+    width: 100%;
     margin-right: auto;
     margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .searchInput {
@@ -11,7 +13,27 @@
     background: transparent;
     border-style: none;
     border: 1px solid #FF5722;
-    border-radius: 20px;
+    border-radius: 3px;
     font-size: 18px;
     padding-left: 10px;
+}
+
+.searchButton {
+    border: 1px solid #FF5722;
+    background-color: transparent;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    transition: ease-out 0.2s;
+    cursor: pointer;
+}
+
+
+.searchButton:hover {
+    border-color: #FFCCBC;
+}
+
+.searchIcon {
+    width: 20px;
+    height: 20px;
 }

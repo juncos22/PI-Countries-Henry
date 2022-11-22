@@ -51,6 +51,16 @@
     transition: ease-in-out 0.3s;
 }
 
+.disabled {
+    background-color: gray;
+    color: white;
+    cursor: default;
+    border-radius: 20px;
+    width: 268px;
+    height: 31px;
+    border: none;
+}
+
 .btnForm:hover {
     background-color: #FFCCBC;
     color: #212121;
