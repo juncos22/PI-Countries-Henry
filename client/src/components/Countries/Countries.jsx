@@ -38,11 +38,8 @@ export function Countries({
     useEffect(() => {
         loadCountries()
         loadActivities()
-    }, [])
-
-    useEffect(() => {
         loadContinents()
-    }, [])
+    }, [loadCountries, loadActivities, loadContinents])
 
     const paginatedCountries = () => {
         return countries.slice(page, page === 0 ? page + 9 : page + 10)
