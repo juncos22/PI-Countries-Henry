@@ -60,9 +60,9 @@
 }
 
 body {
-  background-image: url("./assets/img/background.png");
+  background: url("./assets/img/background.jpg");
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: cover;
   background-color: rgba(33, 33, 33, 0.8);
 }
 
@@ -73,4 +73,10 @@ body {
 
 * {
   font-family: Roboto;
+}
+
+@media (max-width: 900px) {
+  body {
+    background-size: 100% 100%;
+  }
 }
