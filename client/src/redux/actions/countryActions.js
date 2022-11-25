@@ -12,7 +12,7 @@ export const GET_CONTINENTS = 'GET_CONTINENTS'
 export const GET_ERROR = 'GET_ERROR'
 export const CLEAN_ERROR = 'CLEAN_ERROR'
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'https://picountries-v1.up.railway.app';
 
 export function getAllCountries(queryParams) {
     let params = ""

@@ -6,7 +6,7 @@ export const GET_ACTIVITIES = 'GET_ACTIVITIES'
 export const GET_ERROR = 'GET_ERROR'
 export const CLEAN_ERROR = 'CLEAN_ERROR'
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'https://picountries-v1.up.railway.app';
 
 export function createActivity(name, difficulty, duration, season, countries) {
     return async function (dispatch) {
