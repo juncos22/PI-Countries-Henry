@@ -58,25 +58,3 @@
   margin-left: 10px;
   margin-right: 10px;
 }
-
-body {
-  background: url("./assets/img/background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: rgba(33, 33, 33, 0.8);
-}
-
-@font-face {
-  font-family: Roboto;
-  src: url(./assets/fonts/roboto.ttf);
-}
-
-* {
-  font-family: Roboto;
-}
-
-@media (max-width: 900px) {
-  body {
-    background-size: 100% 100%;
-  }
-}
