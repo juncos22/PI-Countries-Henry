@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "build 'hello world'!",
     "start": "node index.js",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
