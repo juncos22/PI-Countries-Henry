@@ -9,7 +9,7 @@ export default function ComboBox({ label, onSelected, data }) {
                     onChange={onSelected}>
                     <option value={''}>{label}</option>
                     {
-                        data.map((d, i) => (
+                        data && data?.map((d, i) => (
                             <option key={i} className={styles.listItem} value={d}>{d}</option>
                         ))
                     }
@@ -20,7 +20,7 @@ export default function ComboBox({ label, onSelected, data }) {
                     onChange={onSelected}>
                     <option value={0}>{label}</option>
                     {
-                        data && data.map((d, i) => (
+                        data && data?.map((d, i) => (
                             <option key={i} className={styles.listItem} value={d.id}>{d.name}</option>
                         ))
                     }
@@ -31,7 +31,7 @@ export default function ComboBox({ label, onSelected, data }) {
                     onChange={onSelected}>
                     <option value={''}>{label}</option>
                     {
-                        data && data.map((d, i) => (
+                        data && data?.map((d, i) => (
                             <option key={i} className={styles.listItem} value={d}>{d}</option>
                         ))
                     }
