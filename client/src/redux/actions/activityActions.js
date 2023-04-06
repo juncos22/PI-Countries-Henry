@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { baseUrl } from '../../lib/baseUrl';
 
 export const CREATE_ACTIVITY = 'CREATE_ACTIVITY'
 export const CREATING_ACTIVITY = 'CREATING_ACTIVITY'
@@ -6,7 +7,6 @@ export const GET_ACTIVITIES = 'GET_ACTIVITIES'
 export const GET_ERROR = 'GET_ERROR'
 export const CLEAN_ERROR = 'CLEAN_ERROR'
 
-const baseUrl = 'https://picountries-v1.up.railway.app';
 
 export function createActivity(name, difficulty, duration, season, countries) {
     return async function (dispatch) {

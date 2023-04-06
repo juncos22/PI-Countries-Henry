@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { baseUrl } from '../../lib/baseUrl';
 
 export const GET_COUNTRIES = 'GET_COUNTRIES'
 export const GET_ALL_COUNTRIES = 'GET_ALL_COUNTRIES'
@@ -11,8 +12,6 @@ export const ORDER_BY_POPULATION = 'ORDER_BY_POPULATION'
 export const GET_CONTINENTS = 'GET_CONTINENTS'
 export const GET_ERROR = 'GET_ERROR'
 export const CLEAN_ERROR = 'CLEAN_ERROR'
-
-const baseUrl = 'https://picountries-v1.up.railway.app';
 
 export function getAllCountries(queryParams) {
     let params = ""
