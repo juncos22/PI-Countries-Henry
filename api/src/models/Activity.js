@@ -18,7 +18,7 @@ module.exports = (sequielize) => {
             }
         },
         duration: {
-            type: DataTypes.INTEGER
+            type: DataTypes.BIGINT
         },
         season: {
             type: DataTypes.ENUM('Primavera', 'Verano', 'Otoño', 'Invierno')
