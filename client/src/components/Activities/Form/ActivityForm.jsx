@@ -30,7 +30,6 @@ export default function ActivityForm() {
                         className={`${styles.inputForm}`}
                         id="duration"
                         name="duration"
-                        max={100000}
                         placeholder="Duracion (min.)"
                     />
 
